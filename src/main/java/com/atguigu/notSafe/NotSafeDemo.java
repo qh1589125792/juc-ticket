@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -82,7 +83,9 @@ public class NotSafeDemo {
 	}
 
 	public static void mapNotSafe() {
-		Map<String, String> map = new HashMap<String, String>();
+		//Map<String, String> map = new HashMap<String, String>();
+		//Map<String, String> map = Collections.synchronizedMap(new HashMap<>());
+		Map<String, String> map = new ConcurrentHashMap<>();
 		for (int i = 1; i <= 30; i++) {
 			new Thread(() -> {
 				map.put(Thread.currentThread().getName(), UUID.randomUUID().toString().substring(0, 6));
